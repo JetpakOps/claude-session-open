@@ -23,7 +23,11 @@
   var url = 'claude://claude.ai/epitaxy/' + id;
   document.getElementById('link').href = url;
   location.href = url;
-  setTimeout(function () { window.close(); }, 10000);
+  // First visit stays open long enough to answer Chrome's "Open Claude?" prompt and tick
+  // "Always allow"; after that the tab only has to outlive the launch.
+  var seen = false;
+  try { seen = localStorage.getItem('seen') === '1'; localStorage.setItem('seen', '1'); } catch (e) {}
+  setTimeout(function () { window.close(); }, seen ? 1200 : 10000);
 })();
 </script>
 </body>
