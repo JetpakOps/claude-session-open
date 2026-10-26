@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Open session</title>
+<style>body{font:16px/1.5 system-ui,sans-serif;margin:3em auto;max-width:32em;padding:0 1em}</style>
+</head>
+<body>
+<p id="msg">Opening session in Claude…</p>
+<p><a id="link" href="#">Open in Claude</a></p>
+<p id="close">You can close this tab.</p>
+<script>
+(function () {
+  var id = location.hash.slice(1);
+  if (!/^local_[0-9a-f-]{36}$/.test(id)) {
+    document.getElementById('msg').textContent = 'No session id.';
+    document.getElementById('link').parentNode.remove();
+    document.getElementById('close').remove();
+    return;
+  }
+  var url = 'claude://claude.ai/epitaxy/' + id;
+  document.getElementById('link').href = url;
+  location.href = url;
+  setTimeout(function () { window.close(); }, 10000);
+})();
+</script>
+</body>
+</html>
